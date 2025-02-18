@@ -1,0 +1,24 @@
+;; Function to insert an element into a sorted list
+(defun insert-sorted (item sorted)
+  "Inserts an item into a sorted list in ascending order."
+  (if (or (null sorted) (< item (car sorted)))
+      (cons item sorted)  ;; Insert here right about now
+      (cons (car sorted) (insert-sorted item (cdr sorted)))))  ;; Continue searching
+
+;; Recursive helper function for insertion sort
+(defun insertion-sort-helper (unsorted sorted)
+  "Recursively sorts a list using insertion sort."
+  (if (null unsorted)
+      sorted  ;; Base case: return sorted list when unsorted is empty
+      (insertion-sort-helper (cdr unsorted)  ;; Process remaining elements
+                             (insert-sorted (car unsorted) sorted))))  ;; Insert current element
+
+;; Main function to sort a list using insertion sort
+(defun insertion-sort (lst)
+  "Sorts a list using insertion sort."
+  (insertion-sort-helper lst nil))  ;; Start with an empty sorted list
+
+;; Test cases
+(print (insertion-sort '(9 4 7 1 3 6)))  ;; Expected Output: (1 3 4 6 7 9)
+(print (insertion-sort '(5 2 8 1 7 3)))  ;; Expected Output: (1 2 3 5 7 8)
+(print (insertion-sort '(10 20 5 15 0))) ;; Expected Output: (0 5 10 15 20)
