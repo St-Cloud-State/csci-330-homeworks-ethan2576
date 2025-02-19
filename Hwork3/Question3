@@ -1,0 +1,40 @@
+;; Function to merge two sorted lists
+(defun bottom-up-merge (list1 list2)
+  "Merges two sorted lists into one sorted list."
+  (cond
+    ((null list1) list2)  ;; If first list is empty, return second list
+    ((null list2) list1)  ;; If second list is empty, return first list
+    ((<= (car list1) (car list2))
+     (cons (car list1) (bottom-up-merge (cdr list1) list2)))  ;; Pick from list1
+    (t
+     (cons (car list2) (bottom-up-merge list1 (cdr list2)))))) ;; Pick from list2
+
+;; Function to pair adjacent elements into sorted sublists
+(defun make-pairs (lst)
+  "Splits the list into sorted pairs."
+  (if (null lst)
+      nil
+      (if (null (cdr lst))
+          (list lst)  ;; If only one element left, return it as a sublist
+          (cons (bottom-up-merge (list (car lst)) (list (cadr lst))) ;; Merge pairs
+                (make-pairs (cddr lst))))))  ;; Recursively process the rest
+
+;; Function to iteratively merge lists until fully sorted
+(defun bottom-up-merge-sort (lst)
+  "Sorts a list using bottom-up merge sort."
+  (let ((pairs (make-pairs lst)))  ;; Step 1: Convert into sorted pairs
+    (loop while (> (length pairs) 1) do
+          (setq pairs (merge-pass pairs)))  ;; Merge adjacent pairs iteratively
+    (car pairs)))  ;; Return the fully sorted list
+
+;; Function to merge all adjacent sublists in one pass
+(defun merge-pass (lst)
+  "Performs one pass of merging adjacent lists."
+  (if (null lst)
+      nil
+      (if (null (cdr lst))
+          lst  ;; If only one list remains, return it
+          (cons (bottom-up-merge (car lst) (cadr lst))
+                (merge-pass (cddr lst))))))  ;; Merge next pairs
+
+

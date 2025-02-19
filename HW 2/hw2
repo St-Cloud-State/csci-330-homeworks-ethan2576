@@ -1,0 +1,71 @@
+Script started on 2025-02-06 05:50:30+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="128" LINES="9"]
+[0;32m@ethan2576 [0m➜ [1;34m/workspaces/csci-330-homeworks-ethan2576/HW 2 [0;36m([1;31mmain[0;36m) [0m$ sbcl
+This is SBCL 1.4.3, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* (NOT (EQUAL 3 (ABS -3))) 
+
+NIL
+* (eval (list '/ (list '+ 8 12) 2))
+
+10
+* (+ (* 3 3) (* 4 4))
+
+25
+
+*(defun miles-per-gallon (initial-odometer-reading final-odometer-reading gallons-consumed)
+(if (= gallons-consumed 0)
+(error "Gallons consumed cannot be zero.") (/ (- final-odometer-reading initial-odometer-reading) gallons-consumed)))
+
+*(third ‘(the quick brown fox))
+(list 2 ‘and 2 ‘is 4)
+(+ 1 (length (list t t t t)))
+(cons ’patrick ‘(seymour marvin))
+(cons ’patrick (list ‘seymour ‘marvin))
+
+*(defun mystery (x)
+(list (second x) (first x)))
+
+*(mystery ’(dancing bear))
+
+(bear dancing) 
+
+*(mystery ’dancing ’bear) 
+
+*(mystery ’(zowie)) 
+
+nil zowie
+
+*(mystery (list ’first ’second))
+
+(second first)
+
+*(list ’cons t nil)
+
+(cons t nil)
+
+*(eval (list ’cons t nil))
+
+(t)
+
+*(apply #’cons ’(t nil))
+
+(t)
+
+*(eval nil)
+
+nil
+
+*(list ’eval nil)
+
+
+
+* (quit)
+[0;32m@ethan2576 [0m➜ [1;34m/workspaces/csci-330-homeworks-ethan2576/HW 2 [0;36m([1;31mmain[0;36m) [0m$ exit
+exit
+
+Script done on 2025-02-06 05:51:07+00:00 [COMMAND_EXIT_CODE="0"]

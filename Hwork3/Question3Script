@@ -1,0 +1,73 @@
+Script started on 2025-02-19 05:01:50+00:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="128" LINES="29"]
+s[0;32m@ethan2576 [0m➜ [1;34m/workspaces/csci-330-homeworks-ethan2576 [0;36m([1;31mmain[0;36m) [0m$ sbcl
+This is SBCL 1.4.3, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* ;; Function to merge two sorted lists
+(defun bottom-up-merge (list1 list2)
+  "Merges two sorted lists into one sorted list."
+  (cond
+    ((null list1) list2)  ;; If first list is empty, return second list
+    ((null list2) list1)  ;; If second list is empty, return first list
+    ((<= (car list1) (car list2))
+     (cons (car list1) (bottom-up-merge (cdr list1) list2)))  ;; Pick from list1
+    (t
+     (cons (car list2) (bottom-up-merge list1 (cdr list2)))))) ;; Pick from list2
+
+;; Function to pai
+BOTTOM-UP-MERGE
+* r adjacent elements into sorted sublists
+(defun make-pairs (lst)
+  "Splits the list into sorted pairs."
+  (if (null lst)
+      nil
+      (if (null (cdr lst))
+          (list lst)  ;; If only one element left, return it as a sublist
+          (cons (bottom-up-merge (list (car lst)) (list (cadr lst))) ;; Merge pairs
+                (make-pairs (cddr lst))))))  ;; Recursively process the rest
+                
+;; Function to iteratively merge lists until fully sorted
+MAKE-PAIRS
+(defun bottom-up-merge-sort (lst)
+  "Sorts a list using bottom-up merge sort."
+  (let ((pairs (make-pairs lst)))  ;; Step 1: Convert into sorted pairs
+    (loop while (> (length pairs) 1) do
+          (setq pairs (merge-pass pairs)))  ;; Merge adjacent pairs iteratively
+    (car pairs)))  ;; Return the fully sorted list
+
+;; Function to merge all ; in: DEFUN BOTTOM-UP-MERGE-SORT
+;     (MERGE-PASS PAIRS)
+; 
+; caught STYLE-WARNING:
+;   undefined function: MERGE-PASS
+; 
+; compilation unit finished
+;   Undefined function:
+;     MERGE-PASS
+;   caught 1 STYLE-WARNING condition
+
+BOTTOM-UP-MERGE-SORT
+* adjacent sublists in one pass
+(defun merge-pass (lst)
+  "Performs one pass of merging adjacent lists."
+  (if (null lst)
+      nil
+      (if (null (cdr lst))
+          lst  ;; If only one list remains, return it
+          (cons (bottom-up-merge (car lst) (cadr lst))
+                (merge-pass (cddr lst))))))  ;; Merge next pairs
+
+MERGE-PASS
+* (print (bottom-up-merge-sort '(7 3 5 2 8 1)))
+
+(1 2 3 5 7 8) 
+(1 2 3 5 7 8)
+* (quit)
+[0;32m@ethan2576 [0m➜ [1;34m/workspaces/csci-330-homeworks-ethan2576 [0;36m([1;31mmain[0;36m) [0m$ exit
+exit
+
+Script done on 2025-02-19 05:02:26+00:00 [COMMAND_EXIT_CODE="0"]

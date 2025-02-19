@@ -1,0 +1,41 @@
+Script started on 2025-02-19 04:48:48+00:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="128" LINES="29"]
+[0;32m@ethan2576 [0m➜ [1;34m/workspaces/csci-330-homeworks-ethan2576 [0;36m([1;31mmain[0;36m) [0m$ sbcl
+This is SBCL 1.4.3, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* (defun partition (lst)
+(let ((half (/ (length lst) 2)))
+(list (subseq lst 0 half)
+(subseq lst half))))
+
+PARTITION
+* (defun mergesort (lst)
+(if (or (null lst) (null (cdr lst)))
+(let* ((halves (partition lst))
+(left (mergesort (first halves)))
+(right (mergesort (second halves))))
+(merge-sorted left right))))
+
+MERGESORT
+* (defun merge-sorted (lst1 lst2)
+(cond
+    ((null lst1) lst2)  ;; If first list is empty, return second list
+    ((null lst2) lst1)  ;; If second list is empty, return first list
+    ((<= (car lst1) (car lst2))
+     (cons (car lst1) (merge-sorted (cdr lst1) lst2)))  ;; Pick from lst1
+    (t
+     (cons (car lst2) (merge-sorted lst1 (cdr lst2)))))) ;; Pick from lst2
+
+MERGE-SORTED
+* (print (mergesort '(38 27 43 3 9 82 10)))
+
+(3 9 10 27 38 43 82)
+* (quit)
+[0;32m@ethan2576 [0m➜ [1;34m/workspaces/csci-330-homeworks-ethan2576 [0;36m([1;31mmain[0;36m) [0m$ exit
+exit
+
+Script done on 2025-02-19 04:51:11+00:00 [COMMAND_EXIT_CODE="0"]
